@@ -111,7 +111,7 @@ start1:
 			mov ch, cl
 			xor cl, cl							;CL - iterator
 			
-			xor ax, ax				;bumber as result of left or right loop
+			xor ax, ax				;ax number as result of left or right loop
 			xor dx, dx				;DL - 'minus' flag
 			
 			mov bl, byte ptr ds:[si]
