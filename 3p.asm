@@ -197,16 +197,15 @@ start1:
 		saveNum:
 			fcom ds:[MAX]
 			fstsw ax		;FPU -> AX
-			sahf			;zapisuje z AH do rejestru flag
-			jna notTooGreat		;jesli st(0) > MAX to skacze do flagi - przerwanie
+			sahf			"ax -> "rejestr flag"
+			jna notTooGreat		; st(0) > MAX 
 				jmp wrong_arguments
 			notTooGreat:
 
-			fstp qword ptr ds:[float]			;zapisuje st(0) - gotowa liczbe zmiennoprzecinkowa - do pamieci i zdejmuje ze stosu
+			fstp qword ptr ds:[float]			; st(0) -> memory
 
 			fsubp st(0), st(0)		;s(1)=0
 			fsubp st(0), st(0)		;s(0)=0
-			
 			popf
 			pop dx
 			pop bx
@@ -218,7 +217,7 @@ start1:
 	showSet proc
 			pusha
 			pushf
-			
+
 			xor cx, cx		;point (0,0)
 			xor dx, dx
 			
@@ -229,7 +228,6 @@ start1:
 			loopRow:
 				cmp cx, 320d		;moving to the end of every row
 				je endOfInnerLoop		;row ended
-
 				mov ax, cx
 				mov di, offset ds:[P1]
 				mov si, offset ds:[P2]
@@ -269,8 +267,7 @@ start1:
 			popa
 			ret
 	showSet endp
-
-
+	
 	calcPQ proc ;bx - size, di - first arg, si - second, ax - N
 			push dx
 			fld qword ptr ds:[si]			
